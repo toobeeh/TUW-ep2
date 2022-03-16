@@ -3,7 +3,12 @@ import codedraw.CodeDraw;
 import java.awt.*;
 import java.util.Random;
 
-// TODO: insert answers to questions (Zusatzfragen) in 'Aufgabenblatt1.md' as comment.
+/*
+    Zusatzfragen:
+        Datenkapselung: Daten zu einer Einheit zusammenfassen - in dem Fall des Beispiels zB die Vektorenkomponenten und deren Methoden als Klasse zusammenzufassen
+        Data Hiding: Daten vor dem Zugriff von anderen "Orten" zu schützen - in dem FAlle des Beispiels die Vektorenkomponenten *private* zu setzen und diese nur durch Operationen zu modifizieren
+        Die Instanz der Klasse bzw. die Klasse, falls es sich um statische Attribute/Methoden handelt. Objektmethoden sollte man im best-practice-Fall an den kleingeschriebenen Instanzen erkennen.
+ */
 
 // Simulates the formation of a massive solar system.
 public class Simulation {
