@@ -95,8 +95,7 @@ public class Body {
     // "5.972E24 kg, position: [1.48E11,0.0,0.0] m, movement: [0.0,29290.0,0.0] m/s."
     public String toString() {
 
-        //TODO: implement method.
-        return "";
+        return String.format("%e kg, position: %s m, movement: %s m/s", this.mass, this.massCenter.toString(), this.currentMovement.toString());
     }
 
 

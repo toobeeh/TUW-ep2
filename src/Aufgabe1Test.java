@@ -28,6 +28,7 @@ public class Aufgabe1Test {
         // check distance to target position (should be zero)
         testValue(earth.distanceTo(targetPositionEarth), 0);
 
+        System.out.println(targetPositionEarth.toString());
     }
 
     public static void testComparison(Object first, Object second, boolean expected) {

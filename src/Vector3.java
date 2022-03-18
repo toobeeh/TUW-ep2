@@ -44,11 +44,7 @@ public class Vector3 {
     // Returns the sum of this vector and -1*v.
     public Vector3 minus(Vector3 v) {
 
-        return new Vector3(
-                this.x - v.x,
-                this.y - v.y,
-                this.z - v.z
-        );
+        return  this.plus(v.times(-1));
     }
 
     // Returns the Euclidean distance of this vector
@@ -92,8 +88,7 @@ public class Vector3 {
     // in the form "[x,y,z]", e.g., "[1.48E11,0.0,0.0]".
     public String toString() {
 
-        //TODO: implement method.
-        return "";
+        return String.format("[%e,%e,%e]", this.x, this.y, this.z);
     }
 
 }
