@@ -1,10 +1,15 @@
 import java.util.Arrays;
 
-class KeyValuePair<TKey, TValue>{
+/**
+ * Class that contains a key and a value
+ * @param <TKey> the key datatype
+ * @param <TValue> the value datatype
+ */
+class MyKeyValuePair<TKey, TValue>{
     private TKey _key;
     private TValue _value;
 
-    public KeyValuePair(TKey key, TValue value){
+    public MyKeyValuePair(TKey key, TValue value){
         this._key = key;
         this._value = value;
     }
@@ -18,12 +23,13 @@ class KeyValuePair<TKey, TValue>{
 //
 public class BodyForceMap {
 
-    private KeyValuePair<Body, Vector3>[] map;
+    private MyKeyValuePair<Body, Vector3>[] map;
 
     // Initializes this map with an initial capacity.
     // Precondition: initialCapacity > 0.
     public BodyForceMap(int initialCapacity) {
-        this.map = new KeyValuePair[initialCapacity];
+
+        this.map = new MyKeyValuePair[initialCapacity];
     }
 
     // Adds a new key-value association to this map. If the key already exists in this map,
@@ -31,18 +37,19 @@ public class BodyForceMap {
     // Precondition: key != null.
     public Vector3 put(Body key, Vector3 force) {
 
-        // get biggest lesser-or-equal index - if array empty, -1 returned!
-        int massIndex = this.firstNotBigger(key.mass());
+        // get first index of elem whose mass isnt bigger - if array empty, -1 returned!
+        int massIndex = MyBodyForceMapHelper.firstNotBigger(key.mass(), this.map);
 
         // try go right as long as right element has same mass - maybe it's the key?
         int sameMass = massIndex;
-        while(sameMass+1 < this.map.length && this.map[sameMass+1] != null && this.map[sameMass+1].key().mass() == key.mass()){
-            sameMass++;
+        while(sameMass < this.map.length && this.map[sameMass] != null && this.map[sameMass].key().mass() == key.mass()){
+
             if(this.map[sameMass].key() == key) {
                 Vector3 old = this.map[sameMass].value();
-                this.map[sameMass] = new KeyValuePair<>(key, force);
+                this.map[sameMass] = new MyKeyValuePair<>(key, force);
                 return old;
             }
+            sameMass++;
         }
 
         // massindex is now either -1 if empty array or at the first non-bigger mass index
@@ -62,7 +69,7 @@ public class BodyForceMap {
         }
 
         // insert new keyvaluepair at free index
-        this.map[massIndex] = new KeyValuePair<Body, Vector3>(key, force);
+        this.map[massIndex] = new MyKeyValuePair<Body, Vector3>(key, force);
 
         return null;
     }
@@ -71,7 +78,7 @@ public class BodyForceMap {
     // associated with the specified body. Returns 'null' if the key is not contained in this map.
     // Precondition: key != null.
     public Vector3 get(Body key) {
-        int massIndex = this.firstNotBigger(key.mass());
+        int massIndex = MyBodyForceMapHelper.firstNotBigger(key.mass(), this.map);
 
         // loop through all key-value-pairs with same mass (higher indexes) and see if any is the key
         while(massIndex <= map.length - 1 && this.map[massIndex] != null && this.map[massIndex].key().mass() == key.mass()){
@@ -83,32 +90,39 @@ public class BodyForceMap {
         }
         return null;
     }
+}
+
+/**
+ * Provides a help function for finding the first not-bigger index
+ */
+class MyBodyForceMapHelper{
 
     /**
      * Searches for the first index that isn't bigger as the given mass
+     * Necessary to take care of multiple keys with the same mass
      * @param mass the mass to search for
      * @return first index of the smaller or equal mass, or -1 if empty array
      */
-    private int firstNotBigger(double mass){
+    static public int firstNotBigger(double mass, MyKeyValuePair<Body, Vector3>[] map){
         int left = 0;
-        int right = this.map.length - 1;
+        int right = map.length - 1;
 
         // find an index that is not bigger
-        while(left >= 0 && left <= right && right <= this.map.length - 1){
+        while(left >= 0 && left <= right && right <= map.length - 1){
             int middle = left + (right - left) / 2;
 
-            var middleKVP = this.map[middle];
+            var middleKVP = map[middle];
 
             // if the middle is not set or smaller / equal, narrow down to left
             if(middleKVP == null || middleKVP.key().mass() <= mass)
                 right = middle - 1;
-            // else narrow down right until left gets bigger than right
+                // else narrow down right until left gets bigger than right
             else left = middle + 1;
         }
 
         // move index as far left as possible to get the first not-bigger
         // not 100% efficient but makes the function more reusable
-        while(left > 0 && this.map[left - 1].key().mass() == mass) left--;
+        while(left > 0 && map[left - 1].key().mass() == mass) left--;
 
         // return the guaranteed index of the first smaller or equal mass
         return left;

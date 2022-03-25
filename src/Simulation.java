@@ -40,12 +40,12 @@ public class Simulation {
 
         // simulation
         CodeDraw cd = new CodeDraw();
-        //Body[] bodies = new Body[NUMBER_OF_BODIES];
         BodyQueue bodies = new BodyQueue(NUMBER_OF_BODIES);
         BodyForceMap forceOnBody = new BodyForceMap(NUMBER_OF_BODIES);
 
         Random random = new Random(2022);
 
+        // generate bodies
         for (int i = 0; i < NUMBER_OF_BODIES; i++) {
             bodies.add(new Body(
                     Math.abs(random.nextGaussian()) * OVERALL_SYSTEM_MASS / NUMBER_OF_BODIES, // kg
@@ -66,51 +66,60 @@ public class Simulation {
 
         // simulation loop
         while (true) {
+
+
             seconds++; // each iteration computes the movement of the celestial bodies within one second.
 
-            // for each body (with index i): compute the total force exerted on it.
-            /*for (int i = 0; i < bodies.length; i++) {
-                forceOnBody[i] = new Vector3(0,0,0); // begin with zero
-                for (int j = 0; j < bodies.length; j++) {
-                    if (i != j) {
-                        Vector3 forceToAdd = bodies[i].gravitationalForce(bodies[j]);
-                        forceOnBody[i] = forceOnBody[i].plus(forceToAdd);
-                    }
-                }
-            }*/
-            BodyQueue bodiesCopy = new BodyQueue(bodies);
-            while(bodiesCopy.size() > 0){
+            // get through queue and add calculate force on body
+            for(int i = 0; i < bodies.size(); i++){
 
-                Body target = bodiesCopy.poll();
-                Vector3 gravF = new Vector3(0,0,0);
-                BodyQueue queueToAddForce = new BodyQueue(bodies);
-                while(queueToAddForce.size() > 0) {
-                    Vector3 addForceOf = target.gravitationalForce(queueToAddForce.poll());
-                    gravF.plus(addForceOf);
+                // get body from queue and add afterwards
+                Body forceOn = bodies.poll();
+
+                // create new vector to accumulate force
+                Vector3 force = new Vector3(0,0,0);
+
+                // get through queue and add force
+                for(int j = 0; j < bodies.size(); j++){
+
+                    // get from queue and add afterwards
+                    Body addForce = bodies.poll();
+                    bodies.add(addForce);
+                    force = force.plus(forceOn.gravitationalForce(addForce));
                 }
 
-                forceOnBody.put(target, gravF);
+                // set vector / add KVPair
+                forceOnBody.put(forceOn, force);
+
+                // re-add body to the queue
+                bodies.add(forceOn);
             }
+
             // now forceOnBody[i] holds the force vector exerted on body with index i.
 
-            // for each body (with index i): move it according to the total force exerted on it.
-            BodyQueue moveQueue = new BodyQueue(bodies);
-            while(moveQueue.size() > 0){
-                Body target = moveQueue.poll();
-                target.move(forceOnBody.get(target));
+            // move each body in the queue
+            for(int i = 0; i < bodies.size(); i++){
+
+                // get and add body
+                Body moved = bodies.poll();
+                bodies.add(moved);
+
+                moved.move(forceOnBody.get(moved));
             }
-            /*for (int i = 0; i < bodies.length; i++) {
-                bodies[i].move(forceOnBody[i]);
-            }*/
 
             // show all movements in the canvas only every hour (to speed up the simulation)
             if (seconds % (3600) == 0) {
                 // clear old positions (exclude the following line if you want to draw orbits).
                 cd.clear(Color.BLACK);
 
-                // draw new positions
-                BodyQueue drawQueue = new BodyQueue(bodies);
-                while (drawQueue.size() > 0) drawQueue.poll().draw(cd);
+                for(int i = 0; i < bodies.size(); i++){
+
+                    // get and add body
+                    Body drawn = bodies.poll();
+                    bodies.add(drawn);
+
+                    drawn.draw(cd);
+                }
 
                 // show new positions
                 cd.show();
