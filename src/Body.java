@@ -98,6 +98,14 @@ public class Body {
         return String.format("%e kg, position: %s m, movement: %s m/s", this.mass, this.massCenter.toString(), this.currentMovement.toString());
     }
 
+    /**
+     * Gets the mass of this body
+     * @return mass as double
+     */
+    public double mass() {
+        return this.mass;
+    }
+
 
 }
 
