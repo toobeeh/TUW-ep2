@@ -64,6 +64,8 @@ public class Simulation {
 
         double seconds = 0;
 
+        System.out.println(bodies.poll().getMinimalDistance(new BodyQueue(bodies)));
+
         // simulation loop
         while (true) {
 

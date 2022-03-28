@@ -21,13 +21,14 @@ public class Body {
         return this.massCenter.distanceTo(b.massCenter);
     }
 
-    public double getMinimalDistance(Body[] bodies){
-        double min = this.distanceTo(bodies[0]);
-        for(Body body : bodies){
-            if(body != this) {
-                double dist = this.distanceTo(body);
-                if(dist < min) min = dist;
-            }
+    public double getMinimalDistance(BodyQueue bodies){
+        double min = this.distanceTo(bodies.poll());
+        while (bodies.size() > 0) {
+
+            Body body = bodies.poll();
+
+            double dist = this.distanceTo(body);
+            if (dist < min && this != body) min = dist;
         }
         return min;
     }
