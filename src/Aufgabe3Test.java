@@ -73,12 +73,14 @@ public class Aufgabe3Test {
         bfm.put(mars, mars.gravitationalForce(sun));
         bfm.put(mercury, mercury.gravitationalForce(sun));
 
+        System.out.println(bfm.toString());
+
         testValue(bfm.get(earth).distanceTo(earth.gravitationalForce(sun)), 0);
         testValue(bfm.get(sun).distanceTo(sun.gravitationalForce(earth).plus(sun.gravitationalForce(venus))), 0);
 
         testValue(bfm.put(earth, new Vector3(0, 0, 0)).distanceTo(earth.gravitationalForce(sun)), 0);
         testValue(bfm.get(earth).distanceTo(new Vector3(0, 0, 0)), 0);
-        testValue(bfm.get(mercury), mercury.gravitationalForce(sun));
+        testValue(bfm.get(mercury).distanceTo(mercury.gravitationalForce(sun)), 0);
 
     }
 

@@ -8,7 +8,7 @@ class MyBodyNode {
     public MyBodyNode previous;
 
     /**
-     * Create a new instance. Properties are priavte access, since this class can only be accessed within bodylinkedlist.
+     * Create a new instance. Properties are public access.
      * @param value
      * @param next
      * @param previous
@@ -211,9 +211,10 @@ public class BodyLinkedList {
             boolean collidesWith = body.distanceTo(check.value) < body.radius() + check.value.radius();
 
             // if collides, remove reference from list and add to collides list
-            if(collidesWith){
+            if(collidesWith && body != check.value){
                 collides.addLast(check.value);
-                check.previous.next = check.next;
+                if (check.previous != null) check.previous.next = check.next;
+                else this.head = check.next;
             }
 
             check = check.next;
