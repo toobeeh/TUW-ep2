@@ -69,7 +69,6 @@ public class Simulation {
         // simulation loop
         while (true) {
 
-
             seconds++; // each iteration computes the movement of the celestial bodies within one second.
 
             // get through queue and add calculate force on body

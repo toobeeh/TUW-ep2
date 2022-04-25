@@ -47,6 +47,47 @@ public class BodyLinkedList {
         }
     }
 
+    public void removeSublist(int fromIndex, int toIndex){
+
+        // find element before first element in remove range
+        MyBodyNode currentNode = head;
+        int index = 0;
+
+        // the node before the first-to-remove node
+        MyBodyNode firstPartLast = null;
+
+        // the node after the last-to-remove node
+        MyBodyNode secondPartFirst = null;
+
+        // loop through nodes in list
+        while(currentNode.next != null){
+
+            // get temp reference
+            MyBodyNode next =  currentNode.next;
+
+            // if firstpartlast is found
+            if(index == fromIndex - 1) firstPartLast = currentNode;
+
+            // if secondpartfirst is found
+            else if(index == toIndex + 1) secondPartFirst = currentNode;
+
+            else if(index >= fromIndex && index <= toIndex){
+                currentNode.next = null;
+                currentNode.previous = null;
+            }
+
+            currentNode = next;
+        }
+
+        // if both indexed were out of range, return
+        if(firstPartLast == null || secondPartFirst == null) return;
+
+        // else "skip" all elements between
+        else {
+            firstPartLast.next = secondPartFirst;
+        }
+    }
+
     // Inserts the specified element 'body' at the beginning of this list.
     public void addFirst(Body body) {
 
