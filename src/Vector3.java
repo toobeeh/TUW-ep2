@@ -84,6 +84,12 @@ public class Vector3 {
         cd.fillCircle(x, y, Math.max(radius, 1.5));
     }
 
+    public void drawLabel(CodeDraw cd, String title){
+        double x = cd.getWidth() * (this.x + Simulation.SECTION_SIZE / 2) / Simulation.SECTION_SIZE;
+        double y = cd.getWidth() * (this.y + Simulation.SECTION_SIZE / 2) / Simulation.SECTION_SIZE;
+        cd.drawText(x + 3,y + 3, title);
+    }
+
     // Returns the coordinates of this vector in brackets as a string
     // in the form "[x,y,z]", e.g., "[1.48E11,0.0,0.0]".
     public String toString() {

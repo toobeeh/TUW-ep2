@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /**
  * A node for the linked body list
  */
@@ -7,12 +9,6 @@ class MyBodyNode {
     public MyBodyNode next;
     public MyBodyNode previous;
 
-    /**
-     * Create a new instance. Properties are public access.
-     * @param value
-     * @param next
-     * @param previous
-     */
     public MyBodyNode(Body value, MyBodyNode previous, MyBodyNode next) {
         this.value = value;
         this.next = next;
@@ -22,7 +18,30 @@ class MyBodyNode {
 
 // A list of bodies implemented as a linked list.
 // The number of elements of the list is not limited.
-public class BodyLinkedList {
+public class BodyLinkedList implements Iterable<Body> {
+
+    // inner class for iterator of this list
+    class BLLIterator implements Iterator<Body> {
+        MyBodyNode nextNode = null;
+
+        public BLLIterator(MyBodyNode startNode){
+            this.nextNode = startNode;
+        }
+
+        public Body next() {
+            Body next = this.nextNode.value;
+            this.nextNode = this.nextNode.next;
+            return next;
+        }
+
+        public boolean hasNext() {
+            return this.nextNode != null;
+        }
+    }
+
+    public Iterator<Body> iterator(){
+        return new BLLIterator(this.head);
+    }
 
     private MyBodyNode head;
 

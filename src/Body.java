@@ -76,6 +76,14 @@ public class Body {
         return SpaceDraw.massToRadius(this.mass);
     }
 
+    /**
+     * Get the mass center of this body
+     * @return vector3 which is the mass center
+     */
+    public Vector3 massCenter() {
+        return this.massCenter;
+    }
+
     // Returns a new body that is formed by the collision of this body and 'b'. The impulse
     // of the returned body is the sum of the impulses of 'this' and 'b'.
     public Body merge(Body b) {
