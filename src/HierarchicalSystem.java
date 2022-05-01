@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 //
 public class HierarchicalSystem implements CosmicSystem {
 
-    CosmicSystem[] systemsInOrbit;
-    NamedBodyForcePair central;
+    private CosmicSystem[] systemsInOrbit;
+    private NamedBodyForcePair central;
 
     // Initializes this system with a name and a central body.
     public HierarchicalSystem(NamedBodyForcePair central, CosmicSystem... inOrbit) {
