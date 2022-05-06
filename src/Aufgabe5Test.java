@@ -2,7 +2,6 @@ public class Aufgabe5Test {
 
     public static void main(String[] args) {
 
-        /* //TODO: uncomment for testing
 
         //test classes NamedBody and MassiveForceHashMap
 
@@ -93,7 +92,6 @@ public class Aufgabe5Test {
         testValue(map.get(earth1), f);
         testValue(map.get(earth2), null);
 
-        */ //TODO: uncomment
     }
 
     public static void testComparison(Object first, Object second, boolean expected) {
