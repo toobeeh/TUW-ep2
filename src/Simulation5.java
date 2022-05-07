@@ -26,7 +26,7 @@ public class Simulation5 {
     public static final double SECTION_SIZE = 10 * AU; // the size of the square region in space
 
     public static final int NUMBER_OF_BODIES = 22;
-    public static final double OVERALL_SYSTEM_MASS = 20 * SUN_MASS; // kilograms
+    public static final double OVERALL_SYSTEM_MASS = 30 * SUN_MASS; // kilograms
 
     // all quantities are based on units of kilogram respectively second and meter.
 
@@ -61,8 +61,49 @@ public class Simulation5 {
                     new Vector3(0 + random.nextGaussian() * 5e3, 0 + random.nextGaussian() * 5e3, 0 + random.nextGaussian() * 5e3));
         }
 
-        //TODO: implementation of this method according to 'Aufgabenblatt5.md'.
-        //  Add both, NamedBody- and Body-objects, to your simulation.
+        // linked list of massives
+        MassiveLinkedList massives = new MassiveLinkedList();
 
+        // add bodies
+        for(Body b : bodies) massives.addLast(b);
+
+        // add massives
+        massives.addLast(sun);
+        massives.addLast(earth);
+        massives.addLast(mars);
+        massives.addLast(deimos);
+
+        // simulate
+        for(int seconds = 0; true; seconds++){
+
+            // calculate forces
+            MassiveForceHashMap massiveMap = new MassiveForceHashMap();
+
+            for(Massive massive : massives){
+                Vector3 force = new Vector3(0,0,0);
+
+                for(Massive forceOf : massives){
+                    force.plus(massive.gravitationalForce(forceOf));
+                }
+                massiveMap.put(massive, force);
+            }
+
+            // move massives
+            for(Massive massive : massiveMap.keyList()){
+                massive.move(massiveMap.get(massive));
+            }
+
+            // draw massives
+            if(seconds % 3600 == 0){
+
+                cd.clear(Color.BLACK);
+
+                for(Massive massive : massiveMap.keyList()){
+                    massive.draw(cd);
+                }
+
+                cd.show();
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 // A list of massive objects implemented as a linked list.
 
+import java.util.Iterator;
+
 /**
  * A node for the linked body list
  */
@@ -21,7 +23,7 @@ class MyMassiveNode {
  */
 
 // The number of elements of the list is not limited.
-public class MassiveLinkedList {
+public class MassiveLinkedList implements Iterable<Massive>{
 
     public MyMassiveNode head;
 
@@ -30,6 +32,29 @@ public class MassiveLinkedList {
 
         // useless
         this.head = null;
+    }
+
+    // inner class for iterator of this list
+    class MLLIterator implements Iterator<Massive> {
+        MyMassiveNode nextNode = null;
+
+        public MLLIterator(MyMassiveNode startNode){
+            this.nextNode = startNode;
+        }
+
+        public Massive next() {
+            Massive next = this.nextNode.value;
+            this.nextNode = this.nextNode.next;
+            return next;
+        }
+
+        public boolean hasNext() {
+            return this.nextNode != null;
+        }
+    }
+
+    public Iterator<Massive> iterator(){
+        return new MassiveLinkedList.MLLIterator(this.head);
     }
 
     // Initializes 'this' as an independent copy of the specified list 'list'.

@@ -46,4 +46,8 @@ public class NamedBody implements Massive
     public void draw(CodeDraw cd){
         this.body.draw(cd);
     }
+
+    public double getMass(){return this.body.getMass(); }
+
+    public Vector3 getMassCenter(){return this.body.getMassCenter(); }
 }

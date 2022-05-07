@@ -29,7 +29,7 @@ public class Simulation {
     public static final double EARTH_RADIUS = 6371e3; // meters
 
     // set some system parameters
-    public static final double SECTION_SIZE = 10 * AU; // the size of the square region in space
+    public static final double SECTION_SIZE = 2 * AU; // the size of the square region in space
     public static final int NUMBER_OF_BODIES = 22;
     public static final double OVERALL_SYSTEM_MASS = 20 * SUN_MASS; // kilograms
 
