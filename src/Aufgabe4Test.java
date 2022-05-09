@@ -172,6 +172,12 @@ public class Aufgabe4Test {
         for (int i = 0; i < bodies.length; i++) {
             testValue(bodies[i].massCenter().distanceTo(pairs[i].getMassCenter()),0);
         }
+
+        System.out.println(hs.toString());
+        hs.markCentralBodies();
+        System.out.println(hs.toString());
+
+
     }
 
     public static void testComparison(Object first, Object second, boolean expected) {

@@ -38,4 +38,9 @@ public interface CosmicSystem extends Drawable {
     // resets all forces to zero.
     void update();
 
+    /**
+     * adds kw central to central bodies of a subsystem
+     */
+    void markCentralBodies();
+
 }

@@ -117,4 +117,15 @@ public class HierarchicalSystem implements CosmicSystem {
             system.draw(cd);
         }
     }
+
+    public void markCentralBodies(){
+
+        // mark center of this system
+        this.central.markCentralBodies();
+        for(var subsystem : this.systemsInOrbit){
+
+            // if subsystem consists of more than one body, it has a center which will be marked
+            if(subsystem.numberOfBodies() > 1) subsystem.markCentralBodies();
+        }
+    }
 }

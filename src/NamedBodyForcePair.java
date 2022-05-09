@@ -70,4 +70,12 @@ public class NamedBodyForcePair implements CosmicSystem {
         this.body.draw(cd);
         this.body.massCenter().drawLabel(cd, this.name);
     }
+
+    /**
+     * adds the keyword center before the name of this body
+     */
+    public void markCentralBodies(){
+        if(!this.name.startsWith("Center "))
+            this.name = "Center " + this.name;
+    }
 }
