@@ -30,7 +30,7 @@ public class NamedBody implements Massive
     // `null` and is of type `NamedBody` and both `this` and `o` have equal names.
     // Otherwise `false` is returned.
     public boolean equals(Object o) {
-        return o instanceof NamedBody ? ((NamedBody) o).name == this.name : false;
+        return o instanceof NamedBody ? ((NamedBody) o).name.equals(this.name) : false;
     }
 
     // Returns the hashCode of `this`.
