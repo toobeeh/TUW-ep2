@@ -92,8 +92,6 @@ public class Aufgabe5Test {
         testValue(map.get(earth1), f);
         testValue(map.get(earth2), null);
 
-        map.test();
-
     }
 
     public static void testComparison(Object first, Object second, boolean expected) {
