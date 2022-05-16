@@ -54,6 +54,33 @@ public class MassiveForceHashMap {
 
     }
 
+    /**
+     * halves the capacity of the map if the new capacity isn't smaller than the count of elements in the hashmap
+     * @return false if the new capacity would be too small
+     */
+    public boolean halveCapacity(){
+
+        // if there are too many elements in the map
+        if(this.count > getCapacity() / 2) return false;
+
+        // copy reference of current map
+        MyKeyValuePair<Massive, Vector3>[] old = this.map;
+
+        // create new map array
+        this.map = new MyKeyValuePair[this.getCapacity() / 2];
+
+        // loop through elements in the old map and re-hash them to the new map
+        for(int i = 0; i < this.getCapacity(); i++){
+            if(old[i] != null) this.put(old[i].key(), old[i].value());
+        }
+
+        return true;
+    }
+
+    public int getCapacity(){
+        return this.map.length;
+    }
+
     // Returns the value associated with the specified key, i.e. the method returns the force vector
     // associated with the specified key. Returns 'null' if the key is not contained in this map.
     // Precondition: key != null.
