@@ -1,13 +1,14 @@
 import codedraw.CodeDraw;
 
 import java.util.Arrays;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 // A cosmic system that is composed of a central named body (of type 'NamedBodyForcePair')
 // and an arbitrary number of subsystems (of type 'HierarchicalSystem') in its orbit.
 // This class implements 'CosmicSystem'.
 //
-public class HierarchicalSystem implements CosmicSystem {
+public class HierarchicalSystem implements CosmicSystem, MassiveIterable {
 
     private CosmicSystem[] systemsInOrbit;
     private NamedBodyForcePair central;
@@ -16,6 +17,15 @@ public class HierarchicalSystem implements CosmicSystem {
     public HierarchicalSystem(NamedBodyForcePair central, CosmicSystem... inOrbit) {
         this.central = central;
         this.systemsInOrbit = inOrbit;
+    }
+
+    public MassiveIterator iterator(){
+
+        // kiiiinda inefficient but... i need to sleep
+        Stack<Massive> massiveStack = new Stack<>();
+        for(Body b : this.getBodies()) massiveStack.add(b);
+
+        return new MassiveStackIterator(massiveStack);
     }
 
     public String toString(){

@@ -64,5 +64,50 @@ public class Simulation6 {
         //TODO: implementation of this method according to 'Aufgabenblatt6.md'.
         //  Add both, NamedBody- and Body-objects, to your simulation.
 
+        // map massives
+        MassiveLinkedList massives = new MassiveLinkedList();
+
+        // add bodies
+        for(Body b : bodies) massives.addLast(b);
+
+        // add massives
+        massives.addLast(sun);
+        massives.addLast(earth);
+        massives.addLast(mars);
+        massives.addLast(deimos);
+
+        // simulate
+        for(int seconds = 0; true; seconds++){
+
+            // calculate forces
+            MassiveForceTreeMap massiveMap = new MassiveForceTreeMap();
+
+            for(Massive massive : massives){
+                Vector3 force = new Vector3(0,0,0);
+
+                for(Massive forceOf : massives){
+                    force.plus(massive.gravitationalForce(forceOf));
+                }
+                massiveMap.put(massive, force);
+            }
+
+            // move massives
+            for(Massive massive : massiveMap.getKeys()){
+                massive.move(massiveMap.get(massive));
+            }
+
+            // draw massives
+            if(seconds % 3600 == 0){
+
+                //cd.clear(Color.BLACK);
+
+                for(Massive massive : massiveMap.getKeys()){
+                    massive.draw(cd);
+                }
+
+                cd.show();
+            }
+        }
+
     }
 }
