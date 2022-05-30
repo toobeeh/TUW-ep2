@@ -1,9 +1,28 @@
 import java.util.Arrays;
+import java.util.Iterator;
+
+class MyKeyIterator implements MassiveIterator {
+
+    Iterator<Massive> it;
+
+    public MyKeyIterator(Iterator<Massive> it){
+        this.it = it;
+    }
+
+    public boolean hasNext() {
+        return this.it.hasNext();
+    }
+
+    public Massive next(){
+        return this.it.next();
+    }
+
+}
 
 // A hash map that associates a 'Massive'-object with a Vector3 (typically this is the force
 // exerted on the object). The number of key-value pairs is not limited.
 //
-public class MassiveForceHashMap {
+public class MassiveForceHashMap implements MassiveIterable {
 
     private MyKeyValuePair<Massive, Vector3>[] map;
     private int count = 0;
@@ -13,6 +32,12 @@ public class MassiveForceHashMap {
 
         // init with capacity 32, because.. :)
         this.map = new MyKeyValuePair[65];
+    }
+
+    public MassiveIterator iterator(){
+
+        return new MyKeyIterator(this.keyList().iterator());
+
     }
 
     // Adds a new key-value association to this map. If the key already exists in this map,

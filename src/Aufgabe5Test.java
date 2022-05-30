@@ -92,6 +92,10 @@ public class Aufgabe5Test {
         testValue(map.get(earth1), f);
         testValue(map.get(earth2), null);
 
+        for(Massive m : map){
+            System.out.println(m);
+        }
+
     }
 
     public static void testComparison(Object first, Object second, boolean expected) {
