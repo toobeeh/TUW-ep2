@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class MassiveStackIterator implements MassiveIterator {
@@ -14,6 +15,7 @@ public class MassiveStackIterator implements MassiveIterator {
     }
 
     public Massive next(){
+        if(!this.stackIterator.hasNext()) throw new NoSuchElementException();
         return this.stackIterator.next();
     }
 }

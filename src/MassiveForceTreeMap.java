@@ -7,7 +7,7 @@ import java.util.Stack;
 // TODO: define further classes and methods for the binary search tree and the implementation
 //  of MassiveSet, if needed.
 //
-public class MassiveForceTreeMap implements MassiveIterable {
+public class MassiveForceTreeMap implements MassiveIterable, MyMassiveRemovable {
 
     // TODO: define missing parts of this class.
     private MyMassiveForceTreeNode root;
@@ -58,7 +58,7 @@ public class MassiveForceTreeMap implements MassiveIterable {
     public MassiveIterator iterator(){
         Stack<Massive> massiveStack = new Stack<>();
         this.root.addToStack(massiveStack);
-        return new MassiveStackIterator(massiveStack);
+        return new MyMassiveStackRemovableIterator(massiveStack, this);
     }
 
     public void remove(Massive element){

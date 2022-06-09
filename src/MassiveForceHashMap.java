@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 class MyKeyIterator implements MassiveIterator {
 
@@ -14,6 +15,7 @@ class MyKeyIterator implements MassiveIterator {
     }
 
     public Massive next(){
+        if(!this.hasNext()) throw new NoSuchElementException();
         return this.it.next();
     }
 

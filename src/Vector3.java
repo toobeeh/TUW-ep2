@@ -69,9 +69,9 @@ public class Vector3 {
     public void normalize() {
 
         double length = length();
-        this.x /= length;
-        this.y /= length;
-        this.z /= length;
+        if(this.x > 0) this.x /= length;
+        if(this.y > 0) this.y /= length;
+        if(this.z > 0) this.z /= length;
     }
 
     // Draws a filled circle with a specified radius centered at the (x,y) coordinates of this vector

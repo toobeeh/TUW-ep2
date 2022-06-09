@@ -33,6 +33,10 @@ public class NamedBody implements Massive
         return o instanceof NamedBody ? ((NamedBody) o).name.equals(this.name) : false;
     }
 
+    public void updateBody(Body b){
+        this.body = b;
+    }
+
     // Returns the hashCode of `this`.
     public int hashCode() {
         return this.name.hashCode();
